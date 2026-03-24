@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Projeto TEAMO</title>
+<meta content="Projeto TEAMO - inclusão, amor e acolhimento para crianças autistas e suas famílias." name="description"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, sans-serif; }
+  
+.encontro-conteudo{
+overflow:hidden;
+max-height:0;
+transition:max-height 0.5s ease;
+}
+
+</style>
+<style>
+#bannerEventoOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.68);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 18px;
+  backdrop-filter: blur(4px);
+}
+#EventoModerno{
+  width: min(760px, 96vw);
+  background: linear-gradient(135deg, #ffffff 0%, #fdf2f8 48%, #eff6ff 100%);
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.25);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.8);
+}
+#EventoModerno::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(14,165,233,0.16), transparent 32%),
+    radial-gradient(circle at bottom left, rgba(236,72,153,0.15), transparent 28%);
+  pointer-events: none;
+}
+#fecharBanner{
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 9999px;
+  border: none;
+  background: rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2;
+  transition: all .2s ease;
+}
+#fecharBanner:hover{
+  background: rgba(236,72,153,0.16);
+  transform: scale(1.05);
+}
+.-topo{
+  position: relative;
+  z-index: 1;
+  padding: 30px 28px 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.-logo{
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(14,165,233,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.-logo img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.-marca small{
+  display:block;
+  color:#475569;
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.-marca h2{
+  margin:0;
+  color:#0f172a;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 800;
+  line-height:1.1;
+}
+.-corpo{
+  position: relative;
+  z-index: 1;
+  padding: 0 28px 28px;
+}
+.-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background: linear-gradient(90deg, #ec4899, #0ea5e9);
+  color:#fff;
+  font-weight:700;
+  border-radius: 9999px;
+  padding: 10px 18px;
+  font-size:14px;
+  margin: 8px 0 14px;
+  box-shadow: 0 10px 22px rgba(14,165,233,0.2);
+}
+.-descricao{
+  color:#334155;
+  font-size: 17px;
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+.-info{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.info-card{
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(14,165,233,0.12);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+}
+.info-card span{
+  display:block;
+  color:#64748b;
+  font-size:13px;
+  margin-bottom:6px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.info-card strong{
+  color:#0f172a;
+  font-size: 18px;
+}
+.contador-box{
+  background: #0f172a;
+  border-radius: 24px;
+  padding: 20px;
+  color: #fff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.22);
+}
+.contador-box h3{
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.contador-grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.contador-item{
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  text-align:center;
+  padding: 14px 8px;
+}
+.contador-item strong{
+  display:block;
+  font-size: clamp(20px, 4vw, 28px);
+  line-height:1;
+  margin-bottom: 6px;
+}
+.contador-item span{
+  font-size: 12px;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.-rodape{
+  margin-top: 16px;
+  color: #475569;
+  font-size: 14px;
+  text-align: center;
+}
+@media (max-width: 640px){
+  .-topo{
+    padding: 24px 18px 12px;
+    align-items: flex-start;
+  }
+  .-corpo{
+    padding: 0 18px 22px;
+  }
+  .-info{
+    grid-template-columns: 1fr;
+  }
+  .contador-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #fecharBanner{
+    top: 12px;
+    right: 12px;
+  }
+}
+</style><style>
+#EventoOverlay{
+  animation: fadeOverlay .5s ease;
+}
+#EventoModerno{
+  animation: Entrada .85s cubic-bezier(.2,.8,.2,1);
+}
+#EventoModerno::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:30px;
+  padding:2px;
+  background: linear-gradient(120deg, rgba(14,165,233,.8), rgba(236,72,153,.8), rgba(14,165,233,.8));
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: bordaBrilho 4s linear infinite;
+  pointer-events:none;
+}
+.-logo{
+  animation: flutuar 3.2s ease-in-out infinite;
+}
+.-badge{
+  animation: pulseBadge 1.8s ease-in-out infinite;
+}
+.contador-box{
+  position:relative;
+  overflow:hidden;
+}
+.contador-box::before{
+  content:"";
+  position:absolute;
+  top:-120%;
+  left:-40%;
+  width:70%;
+  height:300%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,.16), transparent);
+  transform: rotate(20deg);
+  animation: brilhoContador 4.5s linear infinite;
+}
+.contador-item{
+  animation: subirSuave .6s ease both;
+}
+.contador-item:nth-child(1){ animation-delay: .08s; }
+.contador-item:nth-child(2){ animation-delay: .16s; }
+.contador-item:nth-child(3){ animation-delay: .24s; }
+.contador-item:nth-child(4){ animation-delay: .32s; }
+
+.-marca h2{
+  animation: tituloGlow 2.8s ease-in-out infinite;
+}
+.-descricao{
+  animation: fadeUp .9s ease both;
+  animation-delay: .12s;
+}
+.info-card{
+  animation: fadeUp .9s ease both;
+}
+.info-card:nth-child(1){ animation-delay: .16s; }
+.info-card:nth-child(2){ animation-delay: .24s; }
+
+@keyframes fadeOverlay{
+  from{ opacity:0; }
+  to{ opacity:1; }
+}
+@keyframes Entrada{
+  0%{ opacity:0; transform: translateY(18px) scale(.96); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
+@keyframes pulseBadge{
+  0%,100%{ transform:scale(1); box-shadow: 0 10px 22px rgba(14,165,233,0.2); }
+  50%{ transform:scale(1.03); box-shadow: 0 16px 32px rgba(236,72,153,0.22); }
+}
+@keyframes flutuar{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-6px); }
+}
+@keyframes bordaBrilho{
+  0%{ background-position: 0% 50%; }
+  100%{ background-position: 200% 50%; }
+}
+@keyframes brilhoContador{
+  0%{ transform: translateX(-120%) rotate(20deg); }
+  100%{ transform: translateX(260%) rotate(20deg); }
+}
+@keyframes subirSuave{
+  from{ opacity:0; transform: translateY(12px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+@keyframes fadeUp{
+  from{ opacity:0; transform: translateY(10px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+@keyframes tituloGlow{
+  0%,100%{ text-shadow: 0 0 0 rgba(14,165,233,0); }
+  50%{ text-shadow: 0 0 18px rgba(14,165,233,0.18); }
+}
+</style><style>
+
+@keyframes toastFade{
+from{opacity:0;transform:translate(-50%,-10px) scale(.9)}
+to{opacity:1;transform:translate(-50%,0) scale(1)}
+}
+</style><style>
+
+@keyframes toastFade{
+from{opacity:0;transform:translate(-50%,-60%) scale(.9)}
+to{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+</style><style>
+#doacaoOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 99998;
+  backdrop-filter: blur(3px);
+}
+#doacaoModal{
+  width: min(560px, 94vw);
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 52%, #fdf2f8 100%);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(15,23,42,0.28);
+  padding: 28px 24px;
+  position: relative;
+  animation: doacaoEntrada .35s ease;
+  border: 1px solid rgba(255,255,255,.9);
+}
+#doacaoModal h3{
+  margin: 0 0 10px;
+  font-size: 28px;
+  color: #0f172a;
+  text-align: center;
+}
+#doacaoModal p{
+  margin: 8px 0;
+  color: #334155;
+  line-height: 1.6;
+  font-size: 16px;
+}
+#doacaoModal .destaque{
+  background: linear-gradient(90deg,#0ea5e9,#ec4899);
+  color: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 14px 0 16px;
+  box-shadow: 0 10px 24px rgba(14,165,233,.18);
+}
+#doacaoModal .linha{
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(14,165,233,.12);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-top: 10px;
+}
+#doacaoModal .linha strong{
+  color: #0f172a;
+}
+#fecharDoacao{
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(15,23,42,.08);
+  color: #0f172a;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+#fecharDoacao:hover{
+  transform: scale(1.05);
+  background: rgba(236,72,153,.16);
+}
+#doacaoModal .rodape{
+  margin-top: 16px;
+  text-align: center;
+  color: #475569;
+  font-size: 14px;
+}
+@keyframes doacaoEntrada{
+  from{opacity:0; transform: translateY(16px) scale(.96);}
+  to{opacity:1; transform: translateY(0) scale(1);}
+}
+</style><style>
+#copiarPixBtn{
+margin-top:10px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+font-weight:700;
+font-size:15px;
+cursor:pointer;
+background:linear-gradient(90deg,#0ea5e9,#ec4899);
+color:white;
+box-shadow:0 10px 22px rgba(14,165,233,0.2);
+transition:transform .15s ease, box-shadow .15s ease;
+}
+#copiarPixBtn:hover{
+transform:scale(1.03);
+box-shadow:0 14px 28px rgba(236,72,153,0.25);
+}
+</style><style>
+#pixConfirmacao{
+  margin-top: 10px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg,#0ea5e9,#ec4899);
+  color: #fff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 700;
+  box-shadow: 0 12px 26px rgba(14,165,233,.18);
+  animation: pixSucessoEntrada .35s ease;
+}
+#pixConfirmacao .check{
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: checkPulse .5s ease;
+}
+@keyframes pixSucessoEntrada{
+  from{opacity:0; transform: translateY(8px) scale(.96);}
+  to{opacity:1; transform: translateY(0) scale(1);}
+}
+@keyframes checkPulse{
+  0%{ transform: scale(.7); }
+  70%{ transform: scale(1.1); }
+  100%{ transform: scale(1); }
+}
+</style><style>
+.botao-azul-rosa{
+  background: linear-gradient(90deg,#0ea5e9,#ec4899);
+  color: white !important;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(14,165,233,0.25);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.botao-azul-rosa:hover{
+  transform: scale(1.05);
+  box-shadow: 0 14px 35px rgba(236,72,153,0.35);
+}
+</style><style>
+#apresentacoes{
+  scroll-margin-top: 90px;
+}
+#apresentacoes .shadow-lg{
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+}
+</style><style>
+#acoesBannerOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.78);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  padding:18px;
+  backdrop-filter:blur(4px);
+}
+#acoesBannerModal{
+  width:min(980px,96vw);
+  background:linear-gradient(135deg,#ffffff 0%,#eff6ff 52%,#fdf2f8 100%);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(15,23,42,.28);
+  position:relative;
+  border:1px solid rgba(255,255,255,.82);
+}
+#acoesBannerHeader{
+  padding:18px 22px 10px;
+  text-align:center;
+}
+#acoesBannerHeader h3{
+  margin:0;
+  font-size:clamp(24px,4vw,34px);
+  font-weight:800;
+  color:#0f172a;
+}
+#acoesBannerHeader p{
+  margin:6px 0 0;
+  color:#64748b;
+}
+#fecharBannerAcoes{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,#0ea5e9,#ec4899);
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(14,165,233,.25);
+}
+#acoesSliderWrap{
+  padding:0 18px 18px;
+}
+#acoesSlider{
+  position:relative;
+  height:min(72vh,680px);
+  background:#fff;
+  border-radius:22px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:inset 0 0 0 1px rgba(14,165,233,.08);
+}
+#acoesSlider img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  cursor:pointer;
+  background:#fff;
+}
+#acoesSlideInfo{
+  position:absolute;
+  left:16px;
+  bottom:16px;
+  background:rgba(15,23,42,.72);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:999px;
+  font-size:14px;
+  backdrop-filter:blur(4px);
+}
+#acoesPauseBadge{
+  position:absolute;
+  right:16px;
+  bottom:16px;
+  background:linear-gradient(90deg,#0ea5e9,#ec4899);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:999px;
+  font-size:14px;
+  display:none;
+}
+#acoesNavPrev, #acoesNavNext{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:48px;
+  height:48px;
+  border:none;
+  border-radius:999px;
+  background:rgba(255,255,255,.88);
+  color:#0f172a;
+  font-size:28px;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(15,23,42,.18);
+}
+#acoesNavPrev{ left:14px; }
+#acoesNavNext{ right:14px; }
+@media (max-width: 640px){
+  #acoesSlider{ height:60vh; }
+  #acoesNavPrev, #acoesNavNext{
+    width:42px; height:42px; font-size:24px;
+  }
+}
+</style>
+<style>
+#sobre{
+  scroll-margin-top: 90px;
+}
+#sobre .sobre-card{
+  max-width: 960px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.96), rgba(253,242,248,0.96));
+  border: 1px solid rgba(14,165,233,0.12);
+  border-radius: 28px;
+  box-shadow: 0 18px 45px rgba(15,23,42,0.08);
+  padding: 32px 24px;
+}
+#sobre .sobre-titulo{
+  text-align: center;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+#sobre .sobre-sub{
+  text-align: center;
+  color: #64748b;
+  max-width: 700px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+#sobre .sobre-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 26px 0 28px;
+}
+#sobre .sobre-item{
+  background: #fff;
+  border-radius: 22px;
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(15,23,42,0.06);
+  border: 1px solid rgba(236,72,153,0.08);
+}
+#sobre .sobre-icone{
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 12px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  background: linear-gradient(135deg, #0ea5e9, #ec4899);
+  color: white;
+  box-shadow: 0 10px 22px rgba(14,165,233,0.2);
+}
+#sobre .sobre-item h4{
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+#sobre .sobre-item p{
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+}
+#sobre .sobre-texto{
+  max-width: 820px;
+  margin: 0 auto;
+}
+#sobre .sobre-texto p{
+  color: #334155;
+  line-height: 1.9;
+  font-size: 17px;
+  margin: 0 0 18px;
+  text-align: center;
+}
+@media (max-width: 768px){
+  #sobre .sobre-grid{
+    grid-template-columns: 1fr;
+  }
+  #sobre .sobre-card{
+    padding: 24px 16px;
+  }
+  #sobre .sobre-texto p{
+    font-size: 16px;
+    text-align: left;
+  }
+}
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+#realiza-home{
+  padding: 72px 16px 32px;
+}
+#realiza-home .realiza-wrap{
+  max-width: 1120px;
+  margin: 0 auto;
+}
+#realiza-home .realiza-card{
+  background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(239,246,255,0.98), rgba(253,242,248,0.98));
+  border: 1px solid rgba(14,165,233,0.10);
+  border-radius: 28px;
+  padding: 34px 24px;
+  box-shadow: 0 18px 45px rgba(15,23,42,0.08);
+}
+#realiza-home .realiza-titulo{
+  text-align: center;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 14px;
+}
+#realiza-home .realiza-sub{
+  max-width: 860px;
+  margin: 0 auto 16px;
+  text-align: center;
+  line-height: 1.9;
+  color: #475569;
+  font-size: 17px;
+}
+#realiza-home .realiza-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+#realiza-home .realiza-item{
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px 18px;
+  box-shadow: 0 10px 25px rgba(15,23,42,0.06);
+  border: 1px solid rgba(236,72,153,0.08);
+  text-align: left;
+}
+#realiza-home .realiza-icone{
+  width: 58px;
+  height: 58px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  background: linear-gradient(90deg,#0ea5e9,#ec4899);
+  color: #fff;
+  font-size: 26px;
+  box-shadow: 0 10px 22px rgba(14,165,233,0.18);
+}
+#realiza-home .realiza-item h3{
+  margin: 0 0 10px;
+  font-size: 21px;
+  font-weight: 800;
+  color: #0f172a;
+}
+#realiza-home .realiza-item p{
+  margin: 0;
+  color: #475569;
+  line-height: 1.75;
+  font-size: 15px;
+}
+#realiza-home .realiza-final{
+  margin-top: 28px;
+  text-align: center;
+  color: #0f172a;
+  font-size: 19px;
+  line-height: 1.8;
+  font-weight: 700;
+}
+@media (max-width: 980px){
+  #realiza-home .realiza-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px){
+  #realiza-home{
+    padding: 56px 16px 24px;
+  }
+  #realiza-home .realiza-card{
+    padding: 24px 16px;
+  }
+  #realiza-home .realiza-grid{
+    grid-template-columns: 1fr;
+  }
+  #realiza-home .realiza-sub{
+    text-align: left;
+    font-size: 16px;
+  }
+  #realiza-home .realiza-final{
+    font-size: 17px;
+    text-align: left;
+  }
+}
+</style>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  img, video, iframe, canvas, svg { max-width: 100%; height: auto; display: block; }
+
+  #EventoOverlay{
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px;
+    align-items: center;
+  }
+
+  #EventoModerno{
+    width: min(760px, 96vw);
+    max-height: calc(100dvh - 32px);
+    overflow: auto;
+  }
+
+  #fecharBanner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  @media (max-width: 1024px){
+    #EventoModerno{
+      width: min(720px, 96vw);
+      max-height: calc(100dvh - 24px);
+    }
+  }
+
+  @media (max-width: 640px){
+    #EventoOverlay{
+      align-items: flex-start;
+      padding: 10px;
+    }
+
+    #EventoModerno{
+      width: 100%;
+      max-width: 100%;
+      max-height: calc(100dvh - 20px);
+      border-radius: 20px;
+      overflow-y: auto;
+    }
+
+    #fecharBanner{
+      position: sticky !important;
+      top: 10px !important;
+      right: 10px !important;
+      margin: 10px 10px 0 auto;
+      width: 48px !important;
+      height: 48px !important;
+      font-size: 30px !important;
+      background: #ffffff !important;
+      border: 1px solid rgba(148, 163, 184, 0.35) !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18) !important;
+      z-index: 9999 !important;
+    }
+
+    .-topo{
+      padding: 8px 16px 10px !important;
+      gap: 12px !important;
+      padding-right: 16px !important;
+    }
+
+    .-logo{
+      width: 58px !important;
+      height: 58px !important;
+      border-radius: 18px !important;
+    }
+
+    .-corpo{
+      padding: 0 16px 18px !important;
+    }
+
+    .-info{
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+    }
+
+    .contador-grid{
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 10px !important;
+    }
+
+    h1, h2, h3{
+      word-break: break-word;
+    }
+  }
+</style>
+
+<style>
+.lightbox-overlay{position:fixed;inset:0;background:rgba(15,23,42,.88);display:none;align-items:center;justify-content:center;z-index:10000;padding:24px;}
+.lightbox-overlay.active{display:flex;}
+.lightbox-backdrop{position:absolute;inset:0;}
+.lightbox-content{position:relative;max-width:min(92vw,1100px);max-height:90vh;width:100%;display:flex;align-items:center;justify-content:center;}
+.lightbox-image{max-width:100%;max-height:90vh;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.45);object-fit:contain;background:#fff;}
+.lightbox-close,.lightbox-prev,.lightbox-next{position:absolute;border:none;border-radius:9999px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;line-height:1;background:rgba(255,255,255,.92);color:#0f172a;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .2s ease, background .2s ease;}
+.lightbox-close:hover,.lightbox-prev:hover,.lightbox-next:hover{transform:scale(1.05);background:#fff;}
+.lightbox-close{top:-10px;right:-10px;width:46px;height:46px;font-size:24px;}
+.lightbox-prev,.lightbox-next{top:50%;transform:translateY(-50%);width:54px;height:54px;}
+.lightbox-prev:hover,.lightbox-next:hover{transform:translateY(-50%) scale(1.05);}
+.lightbox-prev{left:12px;}
+.lightbox-next{right:12px;}
+.encontro-conteudo img[data-lightboxable="true"]{cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;}
+.encontro-conteudo img[data-lightboxable="true"]:hover{transform:scale(1.02);box-shadow:0 12px 30px rgba(0,0,0,.18);}
+@media (max-width: 768px){
+  .lightbox-overlay{padding:14px;}
+  .lightbox-close{top:-4px;right:-4px;width:42px;height:42px;}
+  .lightbox-prev,.lightbox-next{width:46px;height:46px;font-size:24px;}
+  .lightbox-prev{left:6px;}
+  .lightbox-next{right:6px;}
+}
+</style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-sky-50 via-pink-50 to-white text-slate-800">
+<header class="sticky top-0 z-20 border-b border-sky-100 bg-white/95 backdrop-blur">
+<div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+<div class="flex items-center gap-3">
+<div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm ring-2 ring-sky-100">
+<img alt="Projeto TEAMO Logo" class="h-14 w-auto" src="assets/embedded/image_3650805533750ac6.jpg"/>
+</div>
+<div>
+<p class="text-lg font-bold">Projeto TEAMO</p>
+<p class="text-xs text-slate-500">Inclusão, amor e acolhimento</p>
+</div>
+</div>
+<nav class="hidden items-center gap-5 text-sm font-medium md:flex">
+<a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="#inicio">Início</a>
+<a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="#sobre">Sobre</a>
+<a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="javascript:void(0)" onclick="abrirBannerAcoes(); return false;">Ações</a><a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="javascript:void(0)" onclick="return abrirApresentacoesGuia();">Apresentações</a>
+<a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="#eventos">ENCONTROS TEA</a>
+<a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="#depoimentos">Depoimentos</a>
+<a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="#cadastro">Cadastro</a>
+<a class="px-3 py-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-white hover:opacity-90" href="#doacoes">Doações</a>
+</nav>
+</div>
+<div class="border-t border-sky-100 bg-white md:hidden">
+<div class="mx-auto flex max-w-6xl gap-3 overflow-x-auto px-4 py-3 text-sm font-medium text-slate-600">
+<a class="whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 to-pink-400 px-4 py-2 text-white" href="#inicio">Início</a>
+<a class="whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 to-pink-400 px-4 py-2 text-white" href="#sobre">Sobre</a>
+<a class="whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 to-pink-400 px-4 py-2 text-white" href="javascript:void(0)" onclick="abrirBannerAcoes(); return false;">Ações</a>
+<a class="whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 to-pink-400 px-4 py-2 text-white" href="#eventos">Encontros</a>
+<a class="whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 to-pink-400 px-4 py-2 text-white" href="#depoimentos">Depoimentos</a>
+<a class="whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 to-pink-400 px-4 py-2 text-white" href="#cadastro">Cadastro</a>
+</div>
+</div>
+</header>
+<section class="border-b border-sky-100 bg-white/80 backdrop-blur">
+  <div class="mx-auto max-w-6xl px-4 py-6 md:px-6">
+    <div class="grid gap-6 rounded-[2rem] border border-sky-100 bg-white p-6 shadow-sm md:grid-cols-[1.2fr_0.8fr] md:items-center">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sky-500">Logar</p>
+        <h2 class="mt-2 text-3xl font-bold text-slate-800">Área de Login</h2>
+        <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Entre com login e senha para acessar o painel de cadastro. Se os dados não tiverem acesso, a mensagem será exibida abaixo.</p>
+      </div>
+      <form id="formLoginTopo" class="grid gap-3 md:grid-cols-3">
+        <input id="loginTopoUsuario" class="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-sky-400" placeholder="Login" autocomplete="username" required />
+        <input id="loginTopoSenha" type="password" class="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-sky-400" placeholder="Senha" autocomplete="current-password" required />
+        <button class="rounded-2xl bg-sky-500 px-5 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5">Entrar</button>
+      </form>
+      <div id="loginTopoMensagem" class="hidden rounded-2xl border px-4 py-3 text-sm md:col-span-2"></div>
+    </div>
+  </div>
+</section>
+
+<main>
+<section class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 md:grid-cols-2 md:px-6 md:py-20" id="inicio">
+<div>
+<h1 class="mt-5 text-4xl font-extrabold leading-tight md:text-6xl">
+          Um Projeto feito com <span class="text-sky-600">Amor</span> e <span class="text-pink-400">Inclusao</span>
+</h1>
+
+
+
+<p class="mt-5 max-w-xl text-base leading-7 text-slate-600 md:text-lg">
+          O Projeto Te Amo promove eventos e ações para crianças autistas, fortalecendo a socialização, o acolhimento e o apoio às famílias com um visual suave, organizado e cheio de carinho.
+        </p>
+<div class="mt-8 flex flex-wrap gap-4">
+<a class="rounded-2xl bg-sky-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5" href="https://wa.me/5565996153347">WhatsApp</a>
+<a class="rounded-2xl border border-sky-200 bg-white px-6 py-3 text-sm font-semibold text-sky-600 shadow-sm transition hover:-translate-y-0.5" href="#cadastro">Fazer cadastro</a>
+<a class="rounded-2xl border border-pink-200 bg-white px-6 py-3 text-sm font-semibold text-pink-500 shadow-sm transition hover:-translate-y-0.5" href="#doacoes">Doar com Pix</a>
+<a class="rounded-2xl bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5" href="https://www.instagram.com/projeto_teamo/" rel="noreferrer" target="_blank">Ver Instagram</a>
+</div>
+</div>
+<div class="flex justify-center">
+<div class="rounded-[2rem] bg-white p-8 text-center shadow-xl ring-1 ring-slate-100">
+<div class="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-sky-100 to-pink-100">
+<img alt="Projeto TEAMO Logo" class="h-14 w-auto" src="assets/embedded/image_3650805533750ac6.jpg"/>
+</div>
+<h3 class="mt-4 text-xl font-bold">Projeto TEAMO</h3>
+<p class="mt-2 text-sm text-slate-600">Uma identidade visual delicada, acolhedora e profissional para representar inclusão, amor e união.</p>
+</div>
+</div>
+</section>
+<section class="mx-auto max-w-6xl px-4 py-6 md:px-6">
+<div class="grid gap-4 md:grid-cols-3">
+<div class="rounded-[1.75rem] border border-pink-200 bg-gradient-to-br from-sky-50 to-pink-50 p-6 shadow-sm">
+<div class="text-4xl">💙</div>
+<h3 class="mt-4 text-xl font-bold">Acolhimento</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">Um espaço pensado com carinho para crianças autistas e suas famílias.</p>
+</div>
+<div class="rounded-[1.75rem] border border-pink-200 bg-gradient-to-br from-sky-50 to-pink-50 p-6 shadow-sm">
+<div class="text-4xl">🌸</div>
+<h3 class="mt-4 text-xl font-bold">Informação Clara</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">Comunicação simples, visual leve e acessível.</p>
+</div>
+<div class="rounded-[1.75rem] border border-pink-200 bg-gradient-to-br from-sky-50 to-pink-50 p-6 shadow-sm">
+<div class="text-4xl">🧩</div>
+<h3 class="mt-4 text-xl font-bold">Inclusão</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">Cada criança é única e merece respeito e amor.</p>
+</div>
+</div>
+</section>
+<section class="py-16 px-4 md:px-6 bg-white">
+<div class="mx-auto max-w-6xl">
+<div class="text-center">
+<h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight text-slate-800">
+        Conheça a trajetória da idealizadora do Projeto TEAMO
+      </h2>
+</div>
+
+
+
+<div class="mt-10 grid gap-6 md:grid-cols-2">
+<div class="overflow-hidden rounded-[2rem] bg-white shadow-xl ring-1 ring-slate-100">
+<img alt="Foto da idealizadora do Projeto TEAMO em frente ao painel oficial" class="h-full w-full object-cover" src="assets/embedded/image_49a72df6ae754f5e.jpg"/>
+</div>
+<div class="overflow-hidden rounded-[2rem] bg-white shadow-xl ring-1 ring-slate-100">
+<img alt="Foto da idealizadora do Projeto TEAMO em frente ao painel oficial" class="h-full w-full object-cover" src="assets/embedded/image_1e79c5de54fecbc8.jpg"/>
+</div>
+</div>
+<div class="mt-8 rounded-[2rem] bg-gradient-to-br from-sky-50 via-white to-pink-50 p-6 md:p-8 shadow-lg ring-1 ring-slate-100">
+<p class="text-base leading-8 text-slate-700 md:text-lg">
+        Sou pedagoga e psicopedagoga, atuando também como aplicadora ABA, Denver e Acompanhante Terapêutica (AT) no acompanhamento e desenvolvimento de crianças, especialmente no apoio ao autismo. Sou escritora, autora e palestrante sobre autismo e idealizadora e presidente do Projeto Te Amo, iniciativa que promove conscientização, acolhimento e apoio a famílias e crianças autistas. Na vida pessoal, sou mãe de pets da Amora, Ameixa e Jujuba, que fazem parte da minha vida com muito amor. 💙🐾
+      </p>
+</div>
+</div>
+</section>
+
+
+<section id="como-surgiu-projeto-teamo" class="mx-auto mt-16 max-w-6xl px-4 sm:px-6 lg:px-8">
+  <div class="overflow-hidden rounded-[2rem] bg-white/95 p-6 shadow-xl ring-1 ring-slate-100 sm:p-8">
+    <div class="mb-6">
+      <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl text-center">Como surgiu o projeto TEAMO?</h2>
+<p class="mb-4 text-center text-slate-600 leading-relaxed">
+O Projeto TEAMO nasceu do cuidado, da empatia e do desejo de transformar vidas. 
+Cada passo dessa história carrega dedicação às pessoas e às famílias atendidas.
+</p>
+<p class="mb-6 text-center text-slate-700 font-medium">
+Assista ao vídeo e conheça mais sobre essa trajetória que inspira e acolhe 💙
+</p>
+
+    </div>
+
+
+
+    <div class="overflow-hidden rounded-[1.5rem] bg-slate-950 shadow-lg">
+      <video class="block h-auto w-full" controls playsinline preload="metadata">
+        <source src="assets/embedded/video_1bb77ea82f42fb10.mp4" type="video/mp4">
+        Seu navegador não suporta a reprodução deste vídeo.
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<section class="py-16 px-4 md:px-6" id="sobre">
+<div class="sobre-card">
+<h2 class="sobre-titulo">Sobre Nós</h2>
+<p class="sobre-sub">Um espaço de acolhimento, inclusão e esperança para famílias atípicas.</p>
+<div class="sobre-grid">
+<div class="sobre-item">
+<div class="sobre-icone">🤝</div>
+<h4>Inclusão</h4>
+<p>Promovemos oportunidades para que cada criança e sua família se sintam parte de um ambiente acolhedor e respeitoso.</p>
+</div>
+<div class="sobre-item">
+<div class="sobre-icone">💗</div>
+<h4>Amor</h4>
+<p>Somos movidos pelo carinho, pela empatia e pelo compromisso de cuidar de cada família com atenção e sensibilidade.</p>
+</div>
+<div class="sobre-item">
+<div class="sobre-icone">🫶</div>
+<h4>Apoio</h4>
+<p>Buscamos fortalecer vínculos, oferecer escuta e criar caminhos para que nenhuma família caminhe sozinha.</p>
+</div>
+</div>
+<div class="sobre-texto">
+<p>O Projeto Te Amo nasceu com o propósito de incluir, acolher e apoiar famílias atípicas, especialmente aquelas que convivem com o autismo. Somos uma associação sem fins lucrativos, movida pelo amor, pela empatia e pelo desejo de construir uma sociedade mais inclusiva.</p>
+<p>Nosso sonho é conquistar e manter um espaço dedicado à realização de encontros, eventos e atividades, onde famílias possam se reunir, compartilhar experiências, receber apoio e fortalecer vínculos.</p>
+<p>Acreditamos que nenhuma família deve caminhar sozinha. Por isso, trabalhamos para criar um ambiente seguro, acolhedor e cheio de esperança. 💙</p>
+</div>
+</div>
+</section>
+<section class="mx-auto max-w-6xl px-4 py-16 md:px-6" id="instagram">
+<div class="text-center">
+<h2 class="text-4xl font-bold">Instagram do Projeto</h2>
+<p class="mx-auto mt-3 max-w-2xl text-slate-600">Conteúdos organizados em categorias para deixar tudo mais alinhado, bonito e fácil de encontrar.</p>
+<a class="mt-5 inline-flex rounded-2xl bg-pink-500 px-5 py-3 font-semibold text-white shadow-sm" href="https://www.instagram.com/projeto_teamo/" rel="noreferrer" target="_blank">@projeto_teamo</a>
+</div>
+</section>
+<section id="realiza-home">
+<div class="realiza-wrap">
+<div class="realiza-card">
+<h2 class="realiza-titulo">O que o Projeto TEAMO realiza?</h2>
+<p class="realiza-sub">
+        O Projeto TEAMO desenvolve ações voltadas ao acolhimento, informação, inclusão e apoio às famílias atípicas, especialmente aquelas que convivem com o Transtorno do Espectro Autista (TEA).
+      </p>
+<p class="realiza-sub">
+        Nossas atividades são pensadas para fortalecer vínculos, compartilhar conhecimento e criar momentos especiais para as crianças e suas famílias, promovendo um ambiente de respeito, compreensão e amor.
+      </p>
+<div class="realiza-grid">
+<div class="realiza-item">
+<div class="realiza-icone">🧩</div>
+<h3>Encontros e socialização</h3>
+<p>Realizamos encontros entre famílias, crianças e apoiadores da causa para promover convivência, troca de experiências e fortalecimento da rede de apoio. Esses momentos ajudam as famílias a perceberem que não estão sozinhas nessa caminhada.</p>
+</div>
+<div class="realiza-item">
+<div class="realiza-icone">🎤</div>
+<h3>Palestras e orientação</h3>
+<p>Promovemos palestras, rodas de conversa e momentos de orientação com profissionais e pessoas que atuam na área. O objetivo é levar informação clara e acessível para pais, familiares, cuidadores e toda a comunidade, ajudando a esclarecer dúvidas sobre o autismo e inclusão.</p>
+</div>
+<div class="realiza-item">
+<div class="realiza-icone">🎨</div>
+<h3>Atividades recreativas</h3>
+<p>Organizamos atividades lúdicas e recreativas pensadas especialmente para as crianças. São momentos de brincadeiras, oficinas, experiências sensoriais e interação, estimulando desenvolvimento, participação e alegria.</p>
+</div>
+<div class="realiza-item">
+<div class="realiza-icone">🤝</div>
+<h3>Ações solidárias</h3>
+<p>Realizamos campanhas e iniciativas de apoio social para ajudar famílias atípicas em situação de vulnerabilidade, levando suporte, atenção e cuidado para quem mais precisa.</p>
+</div>
+<div class="realiza-item">
+<div class="realiza-icone">🌈</div>
+<h3>Eventos inclusivos</h3>
+<p>Promovemos eventos especiais voltados à inclusão, onde todas as crianças e famílias são bem-vindas. Esses momentos são planejados com carinho, respeito às diferenças e ambiente acolhedor, valorizando cada criança e sua individualidade.</p>
+</div>
+<div class="realiza-item">
+<div class="realiza-icone">💙</div>
+<h3>Apoio e conscientização sobre o autismo</h3>
+<p>Trabalhamos continuamente para levar informação, conscientização e promover a inclusão das pessoas autistas na sociedade. Nosso compromisso é incentivar o respeito, combater o preconceito e ampliar o entendimento sobre o autismo.</p>
+</div>
+</div>
+<p class="realiza-final">
+        ✨ Nosso propósito é simples e poderoso:<br/>
+        Criar uma comunidade onde famílias se sintam acolhidas, apoiadas e fortalecidas, e onde cada criança seja vista com amor, respeito e oportunidades.
+      </p>
+</div>
+</div>
+</section>
+<section class="py-16 bg-sky-50" id="eventos">
+<div class="max-w-5xl mx-auto px-4">
+<h2 class="text-4xl font-bold text-center mb-10">ENCONTROS TEA</h2>
+<div class="encontros-grid grid grid-cols-2 gap-6 mx-auto"><div class="encontro-item"><div class="bg-gradient-to-r from-sky-400 to-pink-400 p-6 rounded-2xl shadow text-white cursor-pointer encontro-card" onclick="toggleFotos(this)"><h3 class="text-xl font-bold">1º Encontro TEA</h3></div><div class="encontro-conteudo"><div class="mt-10 grid md:grid-cols-3 gap-6">
+<img data-lightboxable="true" alt="IMG-20260310-WA0038.jpg" class="rounded-xl shadow" src="assets/embedded/image_d1fca015d3737b19.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0039.jpg" class="rounded-xl shadow" src="assets/embedded/image_9cd0aca825b16eec.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0040.jpg" class="rounded-xl shadow" src="assets/embedded/image_7a2654081f8c9642.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0041.jpg" class="rounded-xl shadow" src="assets/embedded/image_ba486560079a9cfd.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0042.jpg" class="rounded-xl shadow" src="assets/embedded/image_e15f0f44b3e30064.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0043.jpg" class="rounded-xl shadow" src="assets/embedded/image_c947895e41611223.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0044.jpg" class="rounded-xl shadow" src="assets/embedded/image_6655927923d995ac.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0045.jpg" class="rounded-xl shadow" src="assets/embedded/image_6422971e1e1546d8.jpg"/>
+<img data-lightboxable="true" alt="IMG-20260310-WA0046.jpg" class="rounded-xl shadow" src="assets/embedded/image_8b8a9636e93eb2bc.jpg"/>
+</div>
+</div></div><div class="encontro-item"><div class="bg-gradient-to-r from-sky-400 to-pink-400 p-6 rounded-2xl shadow text-white cursor-pointer encontro-card" onclick="toggleFotos(this)"><h3 class="text-xl font-bold">2º Encontro TEA</h3></div><div class="encontro-conteudo">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_4b118ca3507f9e2e.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_8f651b2d7c8d6bd2.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_6df6568a4ba1c4de.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_6bf0f0832d8b7526.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_bd7d2dccf4064d6e.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_522c23f2d922ce00.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_af4ba4fffa2e1381.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_b560d0cacf9aeafb.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_aea5dc90511b2fe3.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_bddd015fb988f5f8.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_80f6d18bbdb302db.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_1ad4167f5d84fc05.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_e9a2667ec373131f.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_9b47fb9b4a33fc4c.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_3eb1817adebb1922.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_1b6cf6bf8f41f6b7.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_221c2a43422d7bd3.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_7b4df5a3148363b3.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_072abbe2cc6b134c.jpg"/>
+<img data-lightboxable="true" class="rounded-lg shadow-md" src="assets/embedded/image_ce43b42802eb5c5c.jpg"/>
+</div>
+</div></div><div class="encontro-item"><div class="bg-gradient-to-r from-sky-400 to-pink-400 p-6 rounded-2xl shadow text-white cursor-pointer encontro-card" onclick="toggleFotos(this)"><h3 class="text-xl font-bold">3º Encontro TEA</h3></div><div class="encontro-conteudo">
+<div class="galeria-encontro3" style="display:flex;flex-wrap:wrap;justify-content:center;margin-top:20px;">
+<img data-lightboxable="true" src="assets/embedded/image_783d554f1be70817.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_337f82572980ff80.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_f462e4a3055a564e.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_5feca817bb705837.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_f6a49f17e2d5761d.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_a38e65c1f01b4cb5.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_312603cb24b0faad.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_2ddce309eaa58a9e.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_3e6a9d9c3e376ec7.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_df0544074e889291.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+<img data-lightboxable="true" src="assets/embedded/image_17ab97c81c130b14.jpg" style="width:100%;max-width:350px;border-radius:10px;margin:10px;"/>
+</div>
+</div></div><div class="encontro-item"><div class="bg-gradient-to-r from-sky-400 to-pink-400 p-6 rounded-2xl shadow text-white cursor-pointer encontro-card" onclick="toggleFotos(this)"><h3 class="text-xl font-bold">4º Encontro TEA</h3></div><div class="encontro-conteudo"><div class="mt-10 grid md:grid-cols-3 gap-6">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 21.39.56.jpeg" class="rounded-xl shadow" src="assets/embedded/image_a0c0a6e5578e8145.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 21.39.57 (1).jpeg" class="rounded-xl shadow" src="assets/embedded/image_6641d8da9af086fa.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 21.39.57.jpeg" class="rounded-xl shadow" src="assets/embedded/image_ddc33fd556cd6426.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 21.39.58.jpeg" class="rounded-xl shadow" src="assets/embedded/image_9da063c036d78bd7.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 21.39.58 (1).jpeg" class="rounded-xl shadow" src="assets/embedded/image_18a40d107c52cbcd.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 21.39.58 (2).jpeg" class="rounded-xl shadow" src="assets/embedded/image_e387a6a8155122f5.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 21.39.58 (3).jpeg" class="rounded-xl shadow" src="assets/embedded/image_6f1992458452998e.jpg">
+</img></img></img></img></img></img></img></div></div></div><div class="encontro-item"><div class="bg-gradient-to-r from-sky-400 to-pink-400 p-6 rounded-2xl shadow text-white cursor-pointer encontro-card" onclick="toggleFotos(this)"><h3 class="text-xl font-bold">5º Encontro TEA</h3></div><div class="encontro-conteudo"><div class="mt-10 grid md:grid-cols-3 gap-6">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.35 (1).jpeg" class="rounded-xl shadow" src="assets/embedded/image_ce1e1b03d24a0987.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.35 (2).jpeg" class="rounded-xl shadow" src="assets/embedded/image_9a06739e6a5beaaa.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.35.jpeg" class="rounded-xl shadow" src="assets/embedded/image_3b8a38609e78f51a.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.36 (1).jpeg" class="rounded-xl shadow" src="assets/embedded/image_1880ec77db59eea4.jpg">
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.36 (2).jpeg" class="rounded-xl shadow" src="assets/embedded/image_5271dddd0729776e.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.36 (3).jpeg" class="rounded-xl shadow" src="assets/embedded/image_2dabeaaf3e39aaf4.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.36.jpeg" class="rounded-xl shadow" src="assets/embedded/image_546e065235b1df3b.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.37 (1).jpeg" class="rounded-xl shadow" src="assets/embedded/image_77231f39caacefd4.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.37 (2).jpeg" class="rounded-xl shadow" src="assets/embedded/image_79a4085bf37cb2a1.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.37 (3).jpeg" class="rounded-xl shadow" src="assets/embedded/image_f7f1116492158f9a.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.37.jpeg" class="rounded-xl shadow" src="assets/embedded/image_625e35747e3194ee.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.57.38.jpeg" class="rounded-xl shadow" src="assets/embedded/image_eb104a1177eeb542.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.58.25 (1).jpeg" class="rounded-xl shadow" src="assets/embedded/image_623c2dd6669f675b.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.58.25.jpeg" class="rounded-xl shadow" src="assets/embedded/image_5d254676c5ee4732.jpg"/>
+<img data-lightboxable="true" alt="WhatsApp Image 2026-03-15 at 23.58.26.jpeg" class="rounded-xl shadow" src="assets/embedded/image_dcbbf3b61cf5e023.jpg"/>
+</img></img></img></img></div></div></div><div class="encontro-item"><div class="bg-gradient-to-r from-sky-400 to-pink-400 p-6 rounded-2xl shadow text-white encontro-card"><h3 class="text-xl font-bold">6º Encontro TEA <span style="display:block;font-size:14px;color:#e11d48;font-weight:bold;margin-top:6px;">EM BREVE</span><span style="display:block;font-size:13px;color:#334155;">19/04/2026 • 14:30 às 17:00</span></h3></div></div></div>
+</div>
+</section>
+<section class="mx-auto max-w-6xl px-4 py-16 md:px-6" id="depoimentos">
+<div class="mb-10 text-center">
+<p class="text-sm font-semibold uppercase tracking-wide text-pink-400">Depoimentos</p>
+<h2 class="mt-2 text-4xl font-bold">Carinho de quem participa</h2>
+<p class="mx-auto mt-3 max-w-2xl text-slate-600">Um espaço para compartilhar palavras de acolhimento, gratidão e experiências vividas com o projeto.</p>
+<div class="mt-8 flex flex-col gap-4">
+<div class="rounded-[1.5rem] bg-white p-4 shadow-sm ring-1 ring-slate-100">
+<button class="group flex w-full items-center gap-4 text-left" onclick="abrirVideoDepoimento('assets/embedded/video_dd2a601c1f506967.mp4')" type="button">
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-slate-100">
+<video class="h-full w-full object-cover" muted="" playsinline="" preload="metadata">
+<source src="assets/embedded/video_dd2a601c1f506967.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 flex items-center justify-center bg-black/25 transition group-hover:bg-black/35">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md">
+<span class="ml-0.5 text-sm text-slate-800">▶</span>
+</div>
+</div>
+</div>
+<div class="min-w-0">
+<p class="text-base font-bold text-slate-800">Depoimento 1</p>
+<p class="mt-1 text-sm leading-6 text-slate-500">Clique para assistir em tela ampliada.</p>
+</div>
+</button>
+</div>
+<div class="rounded-[1.5rem] bg-white p-4 shadow-sm ring-1 ring-slate-100">
+<button class="group flex w-full items-center gap-4 text-left" onclick="abrirVideoDepoimento('assets/embedded/video_7ea9233b6ae36fb1.mp4')" type="button">
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-slate-100">
+<video class="h-full w-full object-cover" muted="" playsinline="" preload="metadata">
+<source src="assets/embedded/video_7ea9233b6ae36fb1.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 flex items-center justify-center bg-black/25 transition group-hover:bg-black/35">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md">
+<span class="ml-0.5 text-sm text-slate-800">▶</span>
+</div>
+</div>
+</div>
+<div class="min-w-0">
+<p class="text-base font-bold text-slate-800">Depoimento 2</p>
+<p class="mt-1 text-sm leading-6 text-slate-500">Clique para assistir em tela ampliada.</p>
+</div>
+</button>
+</div>
+<div class="rounded-[1.5rem] bg-white p-4 shadow-sm ring-1 ring-slate-100">
+<button class="group flex w-full items-center gap-4 text-left" onclick="abrirVideoDepoimento('assets/embedded/video_03dcd18aaad2672f.mp4')" type="button">
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-slate-100">
+<video class="h-full w-full object-cover" muted="" playsinline="" preload="metadata">
+<source src="assets/embedded/video_03dcd18aaad2672f.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 flex items-center justify-center bg-black/25 transition group-hover:bg-black/35">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md">
+<span class="ml-0.5 text-sm text-slate-800">▶</span>
+</div>
+</div>
+</div>
+<div class="min-w-0">
+<p class="text-base font-bold text-slate-800">Depoimento 3</p>
+<p class="mt-1 text-sm leading-6 text-slate-500">Clique para assistir em tela ampliada.</p>
+</div>
+</button>
+</div>
+<div class="rounded-[1.5rem] bg-white p-4 shadow-sm ring-1 ring-slate-100">
+<button class="group flex w-full items-center gap-4 text-left" onclick="abrirVideoDepoimento('assets/embedded/video_3de9d20437e8a0f1.mp4')" type="button">
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-slate-100">
+<video class="h-full w-full object-cover" muted="" playsinline="" preload="metadata">
+<source src="assets/embedded/video_3de9d20437e8a0f1.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 flex items-center justify-center bg-black/25 transition group-hover:bg-black/35">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md">
+<span class="ml-0.5 text-sm text-slate-800">▶</span>
+</div>
+</div>
+</div>
+<div class="min-w-0">
+<p class="text-base font-bold text-slate-800">Depoimento 4</p>
+<p class="mt-1 text-sm leading-6 text-slate-500">Clique para assistir em tela ampliada.</p>
+</div>
+</button>
+</div>
+</div>
+<div class="grid gap-6 md:grid-cols-3">
+<div class="rounded-[1.75rem] bg-white p-6 shadow-sm ring-1 ring-slate-100">
+<p class="text-sm leading-7 text-slate-600">“Cada encontro traz acolhimento e amor para as famílias. É um projeto que faz diferença.”</p>
+<p class="mt-5 font-bold text-slate-800">Famílias atendidas</p>
+</div>
+<div class="rounded-[1.75rem] bg-white p-6 shadow-sm ring-1 ring-slate-100">
+<p class="text-sm leading-7 text-slate-600">“As ações são lindas, bem organizadas e pensadas com carinho para as crianças.”</p>
+<p class="mt-5 font-bold text-slate-800">Comunidade</p>
+</div>
+<div class="rounded-[1.75rem] bg-white p-6 shadow-sm ring-1 ring-slate-100">
+<p class="text-sm leading-7 text-slate-600">“O Projeto TEAMO representa inclusão, informação e apoio verdadeiro para quem precisa.”</p>
+<p class="mt-5 font-bold text-slate-800">Apoiadores</p>
+</div>
+</div>
+</div></section>
+<section class="mx-auto max-w-6xl px-4 py-16 md:px-6" id="cadastro">
+<div class="overflow-hidden rounded-[2rem] bg-gradient-to-r from-sky-100 via-white to-pink-100 shadow-sm ring-1 ring-slate-100">
+<div class="grid gap-8 p-6 md:grid-cols-2 md:p-10">
+<div>
+<p class="text-sm font-semibold uppercase tracking-wide text-sky-700">Cadastro</p>
+<h2 class="mt-2 text-3xl font-extrabold md:text-4xl">Inscreva-se no Projeto Te Amo</h2>
+<p class="mt-4 text-base leading-7 text-slate-600">Uma área de cadastro simples, organizada e acolhedora para famílias preencherem seus dados e participarem dos encontros, eventos e ações do projeto.</p>
+</div>
+<div class="rounded-[1.75rem] bg-white p-6 shadow-sm ring-1 ring-slate-100">
+<h3 class="text-2xl font-bold text-slate-800">Formulário de cadastro</h3>
+<p class="mt-2 text-sm text-slate-500">Preencha os dados abaixo para participar do projeto.</p>
+<form class="mt-6 space-y-4" id="formCadastro" novalidate>
+<div>
+<input class="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none" id="cadastroCrianca" maxlength="120" placeholder="Nome da criança" required="" type="text"/>
+<p class="mt-1 hidden text-sm text-rose-500" data-error-for="cadastroCrianca"></p>
+</div>
+<div>
+<input class="w-full rounded-2xl border border-pink-100 bg-pink-50 px-4 py-3 outline-none" id="cadastroIdade" inputmode="numeric" maxlength="2" placeholder="Idade" required="" type="text"/>
+<p class="mt-1 hidden text-sm text-rose-500" data-error-for="cadastroIdade"></p>
+</div>
+<div>
+<input class="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none" id="cadastroResponsavel" maxlength="120" placeholder="Nome do responsável" required="" type="text"/>
+<p class="mt-1 hidden text-sm text-rose-500" data-error-for="cadastroResponsavel"></p>
+</div>
+<div>
+<input class="w-full rounded-2xl border border-pink-100 bg-pink-50 px-4 py-3 outline-none" id="cadastroWhatsapp" inputmode="tel" maxlength="20" placeholder="WhatsApp" required="" type="text"/>
+<p class="mt-1 hidden text-sm text-rose-500" data-error-for="cadastroWhatsapp"></p>
+</div>
+<div>
+<textarea class="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none" id="cadastroObservacoes" maxlength="500" placeholder="Observações" rows="4"></textarea>
+<p class="mt-1 hidden text-sm text-rose-500" data-error-for="cadastroObservacoes"></p>
+</div>
+<button class="w-full rounded-2xl bg-pink-500 py-3 text-sm font-semibold text-white shadow-sm botao-azul-rosa" id="btnCadastroSalvar" type="submit">Salvar cadastro</button>
+<p class="hidden rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700" id="cadastroSucesso"></p>
+<p class="hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700" id="cadastroErro"></p>
+<p class="text-xs leading-6 text-slate-400">Ao salvar, o cadastro será enviado automaticamente para o painel administrativo.</p>
+</form>
+</div>
+</div>
+</div>
+</section>
+<section class="mx-auto max-w-6xl px-4 py-16 md:px-6" id="doacoes">
+<div class="grid gap-10 rounded-3xl bg-gradient-to-r from-pink-100 to-sky-100 p-10 md:grid-cols-2">
+<div>
+<h2 class="text-3xl font-bold">Apoie o Projeto
+
+ Te Amo</h2>
+<p class="mt-4 text-slate-600">Sua contribuição ajuda a realizar eventos e apoiar famílias de crianças autistas.</p>
+</div>
+<div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
+<button class="mt-5 w-full rounded-xl bg-pink-500 py-3 text-white botao-azul-rosa" onclick="abrirDoacao(); return false;" type="button">Fazer doação</button>
+</div>
+</div>
+</section>
+</main>
+<script>
+
+function abrirVideoDepoimento(src){
+  var modal = document.getElementById('modalVideoDepoimento');
+  var video = document.getElementById('videoDepoimentoPlayer');
+  var source = document.getElementById('videoDepoimentoSource');
+  if(!modal || !video || !source) return;
+  source.src = src;
+  video.load();
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+function fecharVideoDepoimento(){
+  var modal = document.getElementById('modalVideoDepoimento');
+  var video = document.getElementById('videoDepoimentoPlayer');
+  if(!modal || !video) return;
+  video.pause();
+  video.currentTime = 0;
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    fecharVideoDepoimento();
+  }
+});
+document.addEventListener('click', function(e){
+  var modal = document.getElementById('modalVideoDepoimento');
+  if(e.target === modal){
+    fecharVideoDepoimento();
+  }
+});
+
+function toggleNext(el){
+  const next = el.nextElementSibling;
+  if(!next) return;
+  if(next.style.display === "none"){
+    next.style.display = "block";
+  } else {
+    next.style.display = "none";
+  }
+}
+
+function openLightbox(src){
+  document.getElementById("lightbox-img").src = src;
+  document.getElementById("lightbox").style.display = "flex";
+}
+
+function closeLightbox(){
+  document.getElementById("lightbox").style.display = "none";
+}
+</script>
+<style>
+.lightbox{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,0.9);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:999;
+}
+.lightbox img{
+ max-width:90%;
+ max-height:90%;
+ border-radius:12px;
+}
+.lightbox span{
+ position:absolute;
+ top:20px;
+ right:40px;
+ color:white;
+ font-size:40px;
+ cursor:pointer;
+}
+
+.encontro-conteudo{
+overflow:hidden;
+max-height:0;
+transition:max-height 0.5s ease;
+}
+
+</style>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<span>×</span>
+<img id="lightbox-img"/>
+</div>
+<script>
+let galleryImages=["assets/embedded/image_8b8a9636e93eb2bc.jpg","assets/embedded/image_6422971e1e1546d8.jpg","assets/embedded/image_6655927923d995ac.jpg","assets/embedded/image_c947895e41611223.jpg","assets/embedded/image_e15f0f44b3e30064.jpg","assets/embedded/image_ba486560079a9cfd.jpg","assets/embedded/image_7a2654081f8c9642.jpg","assets/embedded/image_9cd0aca825b16eec.jpg","assets/embedded/image_d1fca015d3737b19.jpg"];
+let currentIndex=0;
+
+function openGallery(i){
+currentIndex=i;
+showImage();
+document.getElementById("gallery").style.display="flex";
+}
+
+function showImage(){
+document.getElementById("gallery-img").src=galleryImages[currentIndex];
+}
+
+function nextImg(){
+currentIndex=(currentIndex+1)%galleryImages.length;
+showImage();
+}
+
+function prevImg(){
+currentIndex=(currentIndex-1+galleryImages.length)%galleryImages.length;
+showImage();
+}
+
+function closeGallery(){
+document.getElementById("gallery").style.display="none";
+}
+
+function toggleNext(el){
+let next=el.nextElementSibling;
+if(!next) return;
+if(next.style.display==="none"||next.style.display===""){
+next.style.display="block";
+}else{
+next.style.display="none";
+}
+}
+</script>
+<style>
+.gallery{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.9);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+flex-direction:column;
+}
+
+.gallery img{
+max-width:90%;
+max-height:80%;
+border-radius:10px;
+}
+
+.gallery button{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:none;
+border:none;
+font-size:50px;
+color:white;
+cursor:pointer;
+}
+
+.prev{left:20px;}
+.next{right:20px;}
+
+.close{
+position:absolute;
+top:20px;
+right:40px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+.encontro-conteudo{
+overflow:hidden;
+max-height:0;
+transition:max-height 0.5s ease;
+}
+
+</style>
+<div class="gallery" id="gallery">
+<span class="close" onclick="closeGallery()">×</span>
+<button class="prev" onclick="prevImg()">❮</button>
+<img id="gallery-img"/>
+<button class="next" onclick="nextImg()">❯</button>
+</div>
+<style>
+.encontro-titulo{
+cursor:pointer;
+font-weight:bold;
+}
+
+.encontro-conteudo{
+overflow:hidden;
+max-height:0;
+transition:max-height 0.5s ease;
+}
+
+</style>
+<script>
+
+function toggleEncontro(id){
+const el = document.getElementById(id);
+if(el.classList.contains("open")){
+el.style.maxHeight="0px";
+el.classList.remove("open");
+}else{
+el.classList.add("open");
+el.style.maxHeight=el.scrollHeight+"px";
+}
+}
+else{
+el.style.display="none";
+}
+}
+</script>
+<script>
+
+function toggleEncontro(id){
+const el = document.getElementById(id);
+if(el.classList.contains("open")){
+el.style.maxHeight="0px";
+el.classList.remove("open");
+}else{
+el.classList.add("open");
+el.style.maxHeight=el.scrollHeight+"px";
+}
+}
+ else {
+    el.style.display = "none";
+  }
+}
+</script>
+<script>
+function toggleFotos(card){
+  const conteudo = card.nextElementSibling;
+  if(!conteudo) return;
+  if(conteudo.style.maxHeight && conteudo.style.maxHeight !== "0px"){
+    conteudo.style.maxHeight = "0px";
+    conteudo.style.marginTop = "0";
+  }else{
+    conteudo.style.maxHeight = conteudo.scrollHeight + "px";
+    conteudo.style.marginTop = "16px";
+  }
+}
+</script>
+<style>
+#eventos .encontros-grid{
+  max-width: 980px;
+  align-items: start;
+}
+#eventos .encontro-item{
+  display:flex;
+  flex-direction:column;
+  align-self:start;
+}
+#eventos .encontro-card{
+  min-height: 110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  width:100%;
+}
+#eventos .encontro-conteudo{
+  overflow:hidden;
+  max-height:0;
+  transition:max-height 0.45s ease;
+  margin-top:0;
+}
+#eventos .encontro-conteudo img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+</style><script>
+function toggleFotos(card){
+  const conteudo = card.nextElementSibling;
+  if(!conteudo) return;
+  if(conteudo.style.maxHeight && conteudo.style.maxHeight !== "0px"){
+    conteudo.style.maxHeight = "0px";
+    conteudo.style.marginTop = "0";
+  }else{
+    conteudo.style.maxHeight = conteudo.scrollHeight + "px";
+    conteudo.style.marginTop = "16px";
+  }
+}
+</script>
+<!-- BANNER EVENTO 6º ENCONTRO TEA -->
+<style>
+#EventoOverlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+font-family:Arial, sans-serif;
+}
+
+#Evento{
+background:white;
+padding:28px 30px;
+border-radius:14px;
+max-width:520px;
+width:90%;
+text-align:center;
+box-shadow:0 10px 40px rgba(0,0,0,0.25);
+position:relative;
+}
+
+#Evento h2{
+font-size:24px;
+margin-bottom:10px;
+color:#0ea5e9;
+}
+
+#Evento p{
+font-size:16px;
+margin:8px 0;
+color:#334155;
+line-height:1.5;
+}
+
+#Evento .data{
+font-weight:bold;
+color:#e11d48;
+font-size:18px;
+margin-top:10px;
+}
+
+#fecharBanner{
+position:absolute;
+top:10px;
+right:14px;
+cursor:pointer;
+font-size:22px;
+font-weight:bold;
+color:#444;
+}
+#fecharBanner:hover{
+color:#e11d48;
+}
+</style>
+<div id="EventoOverlay"><div id="EventoModerno"><button id="fecharBanner" onclick="fecharBanner()" type="button">×</button><div class="-topo"><div class="-logo"><img alt="Logo Projeto TEAMO" src="assets/embedded/image_3650805533750ac6.jpg"/></div><div class="-marca"><small>Projeto TEAMO apresenta</small><h2>6º Encontro TEA</h2></div></div><div class="-corpo"><div class="-badge">EM BREVE • Evento em destaque</div><p class="-descricao">Convidamos você para participar deste momento especial de acolhimento, inclusão e carinho dedicado às nossas crianças.</p><div class="-info"><div class="info-card"><span>Data do evento</span><strong>19/04/2026</strong></div><div class="info-card"><span>Horário</span><strong>14:30 às 17:00</strong></div></div><div class="contador-box"><h3>Contagem regressiva para o evento</h3><div class="contador-grid"><div class="contador-item"><strong id="dias">00</strong><span>Dias</span></div><div class="contador-item"><strong id="horas">00</strong><span>Horas</span></div><div class="contador-item"><strong id="minutos">00</strong><span>Min</span></div><div class="contador-item"><strong id="segundos">00</strong><span>Seg</span></div></div></div><div class="-rodape">Esperamos você para viver esse momento especial com o Projeto TEAMO.</div></div></div></div><script>
+function fecharBanner(){
+  const el = document.getElementById("EventoOverlay");
+  if(el){ el.style.display = "none"; }
+}
+function atualizarContador(){
+  const dataEvento = new Date("2026-04-19T14:30:00");
+  const agora = new Date();
+  const diferenca = dataEvento - agora;
+
+  if(diferenca <= 0){
+    document.getElementById("dias").textContent = "00";
+    document.getElementById("horas").textContent = "00";
+    document.getElementById("minutos").textContent = "00";
+    document.getElementById("segundos").textContent = "00";
+    return;
+  }
+
+  const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+  const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+  const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+  const segundos = Math.floor((diferenca / 1000) % 60);
+
+  document.getElementById("dias").textContent = String(dias).padStart(2, "0");
+  document.getElementById("horas").textContent = String(horas).padStart(2, "0");
+  document.getElementById("minutos").textContent = String(minutos).padStart(2, "0");
+  document.getElementById("segundos").textContent = String(segundos).padStart(2, "0");
+}
+atualizarContador();
+setInterval(atualizarContador, 1000);
+</script><div id="doacaoOverlay" onclick="fecharDoacao(event)"><div id="doacaoModal" onclick="event.stopPropagation()"><button id="fecharDoacao" onclick="fecharDoacao()" type="button">×</button><h3>Fazer Doação</h3><p>Sua contribuição ajuda o Projeto TEAMO a continuar promovendo acolhimento, inclusão e carinho para as crianças e suas famílias.</p><div class="destaque">Chave PIX: 05941993102<button id="copiarPixBtn" type="button">Copiar chave PIX</button><div id="pixConfirmacao"><span class="check">✔</span><span>Chave PIX copiada com sucesso</span></div></div><div class="linha"><p><strong>Nome:</strong> Leydyany jhenneffer Farias Oliveira Chaves</p></div><div class="linha"><p><strong>Responsável:</strong> Fundadora do Projeto TEAMO</p></div><div class="rodape">Obrigado por apoiar essa causa tão importante.</div></div></div><script>
+function abrirDoacao(){
+  const overlay = document.getElementById("doacaoOverlay");
+  if(!overlay) return;
+  overlay.style.display = "flex";
+}
+function fecharDoacao(event){
+  const overlay = document.getElementById("doacaoOverlay");
+  if(!overlay) return;
+  overlay.style.display = "none";
+}
+</script><script>
+let pixMsgTimer = null;
+
+function mostrarConfirmacaoPix(){
+  const confirm = document.getElementById("pixConfirmacao");
+  const btn = document.getElementById("copiarPixBtn");
+  if(btn){
+    btn.innerText = "PIX copiado ✔";
+  }
+  if(confirm){
+    confirm.style.display = "flex";
+  }
+  if(pixMsgTimer){
+    clearTimeout(pixMsgTimer);
+  }
+  pixMsgTimer = setTimeout(function(){
+    if(confirm){
+      confirm.style.display = "none";
+    }
+    if(btn){
+      btn.innerText = "Copiar chave PIX";
+    }
+  }, 2200);
+}
+
+function copiarTextoFallback(texto){
+  const area = document.createElement("textarea");
+  area.value = texto;
+  area.setAttribute("readonly", "");
+  area.style.position = "fixed";
+  area.style.opacity = "0";
+  area.style.left = "-9999px";
+  document.body.appendChild(area);
+  area.focus();
+  area.select();
+  area.setSelectionRange(0, area.value.length);
+  let copiou = false;
+  try{
+    copiou = document.execCommand("copy");
+  }catch(e){
+    copiou = false;
+  }
+  document.body.removeChild(area);
+  return copiou;
+}
+
+function copiarPix(){
+  const chave = "05941993102";
+
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(chave).then(function(){
+      mostrarConfirmacaoPix();
+    }).catch(function(){
+      const ok = copiarTextoFallback(chave);
+      if(ok){
+        mostrarConfirmacaoPix();
+      }else{
+        alert("Não foi possível copiar automaticamente. Chave PIX: " + chave);
+      }
+    });
+  }else{
+    const ok = copiarTextoFallback(chave);
+    if(ok){
+      mostrarConfirmacaoPix();
+    }else{
+      alert("Não foi possível copiar automaticamente. Chave PIX: " + chave);
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  const btn = document.getElementById("copiarPixBtn");
+  if(btn){
+    btn.onclick = copiarPix;
+  }
+});
+</script><div id="acoesBannerOverlay"><div id="acoesBannerModal"><button id="fecharBannerAcoes" onclick="fecharBannerAcoes()" type="button">×</button><div id="acoesBannerHeader"><h3>Ações do Projeto TEAMO</h3><p>As fotos passam automaticamente. Clique na foto para pausar ou continuar.</p></div><div id="acoesSliderWrap"><div id="acoesSlider"><button id="acoesNavPrev" onclick="acaoAnterior(); event.stopPropagation();" type="button">‹</button><img alt="Fotos das ações do Projeto TEAMO" id="acoesSliderImagem" onclick="togglePausaAcoes(event)"/><button id="acoesNavNext" onclick="acaoProxima(); event.stopPropagation();" type="button">›</button><div id="acoesSlideInfo">1 / 1</div><div id="acoesPauseBadge">Pausado</div></div></div></div></div><script>
+const acoesSlides = [
+"assets/embedded/image_a38e65c1f01b4cb5.jpg","assets/embedded/image_2ddce309eaa58a9e.jpg","assets/embedded/image_17ab97c81c130b14.jpg","assets/embedded/image_253dbce53ca66d01.jpg","assets/embedded/image_eed150681f3226f4.jpg","assets/embedded/image_1a3de9863abd5f98.jpg","assets/embedded/image_9b2d0fc4fb69e233.jpg","assets/embedded/image_6b1fc554a70ab4e6.jpg","assets/embedded/image_fab01664406506f0.jpg","assets/embedded/image_5fd7b1b1c412dedb.jpg","assets/embedded/image_58ea9480ab77f54d.jpg","assets/embedded/image_d1902bfc92b269e5.jpg","assets/embedded/image_8492cd00c58c3a32.jpg","assets/embedded/image_99b6d36c4e074a3a.jpg","assets/embedded/image_bfbc470b4fa6f872.jpg","assets/embedded/image_4e8b1a9c7d142db2.jpg","assets/embedded/image_4e3b94bc1d3ec162.jpg","assets/embedded/image_60bb86f3d3f7e7c6.jpg","assets/embedded/image_c4b81168704cbf1b.jpg","assets/embedded/image_8b317ad12f59a54e.jpg",
+"assets/embedded/image_e2acf5b66feaf519.jpg",
+"assets/embedded/image_39783e34e04745b6.jpg",
+"assets/embedded/image_4406c93ca02372c0.jpg",
+"assets/embedded/image_0a26b177407d8fbc.jpg",
+"assets/embedded/image_b9e55a9ca28e4473.jpg",
+"assets/embedded/image_c3a6d1905d8c3ff7.jpg",
+"assets/embedded/image_d382b91de84b5f64.jpg"
+];
+let acoesIndex = 0;
+let acoesTimer = null;
+let acoesPausado = false;
+
+function renderAcoesSlide(){
+  const img = document.getElementById('acoesSliderImagem');
+  const info = document.getElementById('acoesSlideInfo');
+  if(!img || !acoesSlides.length) return;
+  img.src = acoesSlides[acoesIndex];
+  info.textContent = (acoesIndex + 1) + ' / ' + acoesSlides.length;
+}
+
+function iniciarAutoAcoes(){
+  pararAutoAcoes();
+  acoesTimer = setInterval(function(){
+    if(!acoesPausado){
+      acoesIndex = (acoesIndex + 1) % acoesSlides.length;
+      renderAcoesSlide();
+    }
+  }, 2500);
+}
+
+function pararAutoAcoes(){
+  if(acoesTimer) {
+    clearInterval(acoesTimer);
+    acoesTimer = null;
+  }
+}
+
+function abrirBannerAcoes(){
+  const overlay = document.getElementById('acoesBannerOverlay');
+  if(!overlay) return;
+  overlay.style.display = 'flex';
+  acoesIndex = 0;
+  acoesPausado = false;
+  atualizarBadgePausa();
+  renderAcoesSlide();
+  iniciarAutoAcoes();
+}
+
+function fecharBannerAcoes(){
+  const overlay = document.getElementById('acoesBannerOverlay');
+  if(overlay) overlay.style.display = 'none';
+  pararAutoAcoes();
+}
+
+function acaoProxima(){
+  acoesIndex = (acoesIndex + 1) % acoesSlides.length;
+  renderAcoesSlide();
+}
+
+function acaoAnterior(){
+  acoesIndex = (acoesIndex - 1 + acoesSlides.length) % acoesSlides.length;
+  renderAcoesSlide();
+}
+
+function atualizarBadgePausa(){
+  const badge = document.getElementById('acoesPauseBadge');
+  if(!badge) return;
+  badge.style.display = acoesPausado ? 'block' : 'none';
+}
+
+function togglePausaAcoes(event){
+  if(event) event.stopPropagation();
+  acoesPausado = !acoesPausado;
+  atualizarBadgePausa();
+}
+
+document.addEventListener('keydown', function(e){
+  const overlay = document.getElementById('acoesBannerOverlay');
+  if(!overlay || overlay.style.display !== 'flex') return;
+  if(e.key === 'Escape') fecharBannerAcoes();
+  if(e.key === 'ArrowRight') acaoProxima();
+  if(e.key === 'ArrowLeft') acaoAnterior();
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  var  = document.getElementById("EventoOverlay");
+  if(!) return;
+
+  if(!window.JaMostrado){
+    window.JaMostrado = true;
+    setTimeout(function(){
+      .style.display = "flex";
+    }, 1000);
+  }
+});
+</script>
+<script>
+
+function getCadastroData(){
+  return {
+    nome_crianca: ((document.getElementById("cadastroCrianca") || {}).value || "").trim(),
+    idade: ((document.getElementById("cadastroIdade") || {}).value || "").trim(),
+    responsavel: ((document.getElementById("cadastroResponsavel") || {}).value || "").trim(),
+    whatsapp: ((document.getElementById("cadastroWhatsapp") || {}).value || "").trim(),
+    observacoes: ((document.getElementById("cadastroObservacoes") || {}).value || "").trim()
+  };
+}
+
+function limparErrosCadastro(){
+  document.querySelectorAll('[data-error-for]').forEach(function(el){
+    el.textContent = '';
+    el.classList.add('hidden');
+  });
+  var ok = document.getElementById('cadastroSucesso');
+  var erro = document.getElementById('cadastroErro');
+  if (ok) ok.classList.add('hidden');
+  if (erro) erro.classList.add('hidden');
+}
+
+function mostrarErroCampo(campo, mensagem){
+  var el = document.querySelector('[data-error-for="' + campo + '"]');
+  if (!el) return;
+  el.textContent = mensagem;
+  el.classList.remove('hidden');
+}
+
+function validarCadastro(data){
+  var erros = {};
+  if (!data.nome_crianca || data.nome_crianca.length < 3) erros.nome_crianca = 'Informe o nome da criança com pelo menos 3 letras.';
+  if (!/^\d{1,2}$/.test(data.idade) || Number(data.idade) < 1 || Number(data.idade) > 17) erros.idade = 'Informe uma idade válida entre 1 e 17 anos.';
+  if (!data.responsavel || data.responsavel.length < 3) erros.responsavel = 'Informe o nome do responsável.';
+  var digits = (data.whatsapp || '').replace(/\D/g, '');
+  if (digits.length < 10 || digits.length > 13) erros.whatsapp = 'Informe um WhatsApp válido com DDD.';
+  if (data.observacoes && data.observacoes.length > 500) erros.observacoes = 'As observações devem ter no máximo 500 caracteres.';
+  return erros;
+}
+
+async function salvarCadastro(event){
+  event.preventDefault();
+  limparErrosCadastro();
+
+  var data = getCadastroData();
+  var erros = validarCadastro(data);
+  if (Object.keys(erros).length) {
+    var mapa = {
+      nome_crianca: 'cadastroCrianca',
+      idade: 'cadastroIdade',
+      responsavel: 'cadastroResponsavel',
+      whatsapp: 'cadastroWhatsapp',
+      observacoes: 'cadastroObservacoes'
+    };
+    Object.entries(erros).forEach(function(entry){
+      mostrarErroCampo(mapa[entry[0]], entry[1]);
+    });
+    return;
+  }
+
+  var botao = document.getElementById('btnCadastroSalvar');
+  if (botao) {
+    botao.disabled = true;
+    botao.textContent = 'Salvando...';
+  }
+
+  try {
+    await verificarServidorOnline();
+    var result = await fetchJSONSmart('/api/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    var ok = document.getElementById('cadastroSucesso');
+    if (ok) {
+      ok.textContent = 'Seu cadastro foi enviado à nossa central de Administração. Entraremos em contato. Projeto TEAMO💙';
+      ok.classList.remove('hidden');
+      try { localStorage.setItem('teamo_ultimo_cadastro', String(result.id || '')); } catch (e) {}
+    }
+    var form = document.getElementById('formCadastro');
+    if (form) form.reset();
+  } catch (error) {
+    var erro = document.getElementById('cadastroErro');
+    if (erro) {
+      erro.textContent = error.message || 'Erro ao salvar cadastro.';
+      erro.classList.remove('hidden');
+    }
+  } finally {
+    if (botao) {
+      botao.disabled = false;
+      botao.textContent = 'Salvar cadastro';
+    }
+  }
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+  var formCadastro = document.getElementById('formCadastro');
+  if (formCadastro) formCadastro.addEventListener('submit', salvarCadastro);
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  var h3s = Array.from(document.querySelectorAll("h3"));
+  var alvo = h3s.find(function(h){
+    var txt = (h.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+    return txt === "3º encontro tea" || txt === "3o encontro tea";
+  });
+
+  if(!alvo) return;
+  alvo.style.cursor = "pointer";
+
+  var box = alvo.closest("div");
+  var conteudo = null;
+
+  if (box && box.parentElement) {
+    var next = box.nextElementSibling;
+    if (next && next.classList && next.classList.contains("encontro-conteudo")) {
+      conteudo = next;
+    }
+  }
+
+  if (!conteudo) {
+    var prox = alvo.parentElement;
+    while (prox && prox.nextElementSibling) {
+      prox = prox.nextElementSibling;
+      if (prox.classList && prox.classList.contains("encontro-conteudo")) {
+        conteudo = prox;
+        break;
+      }
+    }
+  }
+
+  if(!conteudo) return;
+
+  conteudo.style.display = "none";
+  conteudo.style.maxHeight = "0";
+  conteudo.style.overflow = "hidden";
+
+  alvo.onclick = function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    var fechado = conteudo.style.display === "none" || conteudo.style.maxHeight === "0px" || conteudo.style.maxHeight === "0";
+    if (fechado) {
+      conteudo.style.display = "block";
+      conteudo.style.maxHeight = conteudo.scrollHeight + "px";
+    } else {
+      conteudo.style.maxHeight = "0";
+      setTimeout(function(){
+        conteudo.style.display = "none";
+      }, 300);
+    }
+  };
+});
+</script>
+<!-- Visualizador da apresentação -->
+<div id="modalApresentacao" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,.82); z-index:99999; padding:20px; box-sizing:border-box;">
+<div style="position:relative; width:min(1100px, 100%); height:min(92vh, 920px); margin:0 auto; background:#ffffff; border-radius:18px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.35);">
+<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 18px; background:linear-gradient(90deg,#38bdf8,#f472b6); color:#fff; font-family:inherit;">
+<strong style="font-size:16px;">Apresentações do Projeto TEAMO</strong>
+<div style="display:flex; align-items:center; gap:10px;">
+<a href="assets/apresentacao-teamo.pdf" rel="noopener" style="display:inline-block; padding:9px 14px; border-radius:10px; background:#fff; color:#0f172a; text-decoration:none; font-weight:700;" target="_blank">Abrir PDF</a>
+<button aria-label="Fechar apresentação" onclick="fecharApresentacao()" style="border:none; background:#fff; color:#0f172a; width:38px; height:38px; border-radius:999px; font-size:22px; cursor:pointer; line-height:1;" type="button">×</button>
+</div>
+</div>
+<div id="conteudoApresentacao" style="height:calc(100% - 66px); overflow:auto; background:linear-gradient(180deg,#eff6ff 0%, #fdf2f8 100%); padding:18px;">
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 1 da apresentação do Projeto TEAMO" src="assets/embedded/image_9c7380a6c581154f.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 2 da apresentação do Projeto TEAMO" src="assets/embedded/image_6c6f8fcec531467f.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 3 da apresentação do Projeto TEAMO" src="assets/embedded/image_32d610e9f6855257.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 4 da apresentação do Projeto TEAMO" src="assets/embedded/image_1fc2c7f71db01e88.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 5 da apresentação do Projeto TEAMO" src="assets/embedded/image_cebaba1a376ec2bd.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 6 da apresentação do Projeto TEAMO" src="assets/embedded/image_9c9354ba6a2fe01f.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 7 da apresentação do Projeto TEAMO" src="assets/embedded/image_4e6f261e804009b4.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 8 da apresentação do Projeto TEAMO" src="assets/embedded/image_593ccdbe16108dda.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 9 da apresentação do Projeto TEAMO" src="assets/embedded/image_55d9daa94b605117.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 10 da apresentação do Projeto TEAMO" src="assets/embedded/image_03a0c62d0fb37521.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 11 da apresentação do Projeto TEAMO" src="assets/embedded/image_7f517efd433553a1.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0 0 18px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.10);">
+<img alt="Página 12 da apresentação do Projeto TEAMO" src="assets/embedded/image_7b2a7c69219af5ac.jpg" style="display:block; width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+
+<script>
+const API_CANDIDATES = [''];
+
+function mostrarMensagemBox(id, tipo, texto) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = texto;
+  el.classList.remove('hidden');
+  el.classList.remove('border-rose-200','bg-rose-50','text-rose-700','border-emerald-200','bg-emerald-50','text-emerald-700');
+  if (tipo === 'erro') {
+    el.classList.add('border-rose-200','bg-rose-50','text-rose-700');
+  } else {
+    el.classList.add('border-emerald-200','bg-emerald-50','text-emerald-700');
+  }
+}
+
+async function fetchJSONSmart(path, options) {
+  var lastError = null;
+  for (var i = 0; i < API_CANDIDATES.length; i++) {
+    var base = API_CANDIDATES[i];
+    var url = base + path;
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort(); }, 20000);
+    try {
+      var response = await fetch(url, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal, ...options });
+      var text = await response.text();
+      var data = {};
+      try { data = text ? JSON.parse(text) : {}; } catch (e) {
+        throw new Error('Resposta inválida do servidor.');
+      }
+      if (!response.ok || data.ok === false) {
+        throw new Error(data.message || 'Não foi possível concluir a solicitação.');
+      }
+      return data;
+    } catch (error) {
+      if (!lastError || (error && error.message && error.message !== 'Resposta inválida do servidor.')) lastError = error;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  if (lastError && lastError.name === 'AbortError') {
+    throw new Error('O sistema demorou para responder. Tente novamente.');
+  }
+  if (lastError instanceof TypeError || /fetch/i.test(String((lastError && lastError.message) || ''))) {
+    throw new Error('Não foi possível conectar ao sistema. Confira se o site foi publicado no Netlify e se as Functions estão habilitadas.');
+  }
+  throw lastError || new Error('Não foi possível conectar ao sistema.');
+}
+
+async function verificarServidorOnline() {
+  await fetchJSONSmart('/api/health', { method: 'GET' });
+}
+</script>
+
+
+<script>
+function abrirApresentacoesGuia(){
+  var modal = document.getElementById('modalApresentacao');
+  if(!modal) return false;
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  var box = document.getElementById('conteudoApresentacao');
+  if(box) box.scrollTop = 0;
+  return false;
+}
+
+function fecharApresentacao(){
+  var modal = document.getElementById('modalApresentacao');
+  if(!modal) return;
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('click', function(event){
+  var modal = document.getElementById('modalApresentacao');
+  if(event.target === modal){
+    fecharApresentacao();
+  }
+});
+
+document.addEventListener('keydown', function(event){
+  if(event.key === 'Escape'){
+    fecharApresentacao();
+  }
+});
+</script>
+
+<div class="lightbox-overlay" id="cadLightbox" aria-hidden="true">
+  <div class="lightbox-backdrop" onclick="closeCadLightbox()"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-prev" type="button" aria-label="Foto anterior" onclick="changeCadLightbox(-1)">‹</button>
+    <img class="lightbox-image" id="cadLightboxImage" alt="Foto ampliada" src=""/>
+    <button class="lightbox-next" type="button" aria-label="Próxima foto" onclick="changeCadLightbox(1)">›</button>
+    <button class="lightbox-close" type="button" aria-label="Fechar" onclick="closeCadLightbox()">×</button>
+  </div>
+</div>
+
+
+<script>
+let cadLightboxImages = [];
+let cadLightboxIndex = 0;
+
+function openCadLightbox(groupImages, index){
+  cadLightboxImages = groupImages || [];
+  cadLightboxIndex = index || 0;
+  const overlay = document.getElementById('cadLightbox');
+  if(!overlay || !cadLightboxImages.length) return;
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  updateCadLightbox();
+}
+
+function updateCadLightbox(){
+  const img = document.getElementById('cadLightboxImage');
+  const prev = document.querySelector('.lightbox-prev');
+  const next = document.querySelector('.lightbox-next');
+  if(!img || !cadLightboxImages.length) return;
+  img.src = cadLightboxImages[cadLightboxIndex].src;
+  img.alt = cadLightboxImages[cadLightboxIndex].alt || 'Foto ampliada';
+  const multiple = cadLightboxImages.length > 1;
+  prev.style.display = multiple ? 'flex' : 'none';
+  next.style.display = multiple ? 'flex' : 'none';
+}
+
+function closeCadLightbox(){
+  const overlay = document.getElementById('cadLightbox');
+  if(!overlay) return;
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function changeCadLightbox(step){
+  if(!cadLightboxImages.length) return;
+  cadLightboxIndex = (cadLightboxIndex + step + cadLightboxImages.length) % cadLightboxImages.length;
+  updateCadLightbox();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('#eventos .encontro-item').forEach(function(item){
+    const imgs = Array.from(item.querySelectorAll('.encontro-conteudo img[data-lightboxable="true"]'));
+    imgs.forEach(function(img, index){
+      img.addEventListener('click', function(e){
+        e.stopPropagation();
+        openCadLightbox(imgs, index);
+      });
+    });
+  });
+
+  document.addEventListener('keydown', function(e){
+    const overlay = document.getElementById('cadLightbox');
+    if(!overlay || !overlay.classList.contains('active')) return;
+    if(e.key === 'Escape') closeCadLightbox();
+    if(e.key === 'ArrowLeft') changeCadLightbox(-1);
+    if(e.key === 'ArrowRight') changeCadLightbox(1);
+  });
+});
+</script>
+
+<section id="creditos" class="mx-auto mt-28 max-w-6xl px-4 sm:px-6 lg:px-8">
+  <div class="rounded-[2rem] bg-white p-8 shadow-xl ring-1 ring-slate-100">
+
+    <div class="mb-6 border-b border-slate-100 pb-4">
+      <h2 class="text-2xl font-bold text-slate-900">Créditos</h2>
+      
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+
+      <div>
+        <h3 class="text-lg font-semibold text-slate-800 mb-2">
+          Fundador do site Projeto TEAMO
+        </h3>
+        <p class="text-slate-700 font-medium">
+          Francismar da Silva Duarte
+        </p>
+      </div>
+
+      <div class="space-y-2 text-slate-600">
+        <p><strong>Email:</strong> 
+          <a href="mailto:Francismar_sk8@live.com" class="text-blue-600 hover:underline">
+            Francismar_sk8@live.com
+          </a>
+        </p>
+        <p><strong>Telefone:</strong> 
+          <a href="tel:+5565992122644" class="text-blue-600 hover:underline">
+            (65) 9 9212-2644
+          </a>
+        </p>
+      </div>
+
+    </div>
+
+    <div class="mt-8 text-center text-sm text-slate-400">
+      © Projeto TEAMO 💙 — Todos os direitos reservados
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+(function(){
+  var form = document.getElementById('formLoginTopo');
+  if (!form) return;
+  var msg = document.getElementById('loginTopoMensagem');
+  function mostrar(tipo, texto){
+    msg.textContent = texto;
+    msg.classList.remove('hidden','border-rose-200','bg-rose-50','text-rose-700','border-emerald-200','bg-emerald-50','text-emerald-700');
+    if(tipo === 'ok'){
+      msg.classList.add('border-emerald-200','bg-emerald-50','text-emerald-700');
+    } else {
+      msg.classList.add('border-rose-200','bg-rose-50','text-rose-700');
+    }
+  }
+  form.addEventListener('submit', async function(event){
+    event.preventDefault();
+    try {
+      var response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: document.getElementById('loginTopoUsuario').value,
+          password: document.getElementById('loginTopoSenha').value
+        })
+      });
+      var data = await response.json().catch(function(){ return {}; });
+      if (!response.ok || !data.ok) {
+        throw new Error('Necessário fazer uma conta, para obter acesso.');
+      }
+      mostrar('ok', 'Login realizado com sucesso. Abrindo painel de cadastro...');
+      window.location.href = 'admin.html';
+    } catch (error) {
+      mostrar('erro', (error && error.message) || 'Necessário fazer uma conta, para obter acesso.');
+    }
+  });
+})();
+</script>
+</body>
+</html>
